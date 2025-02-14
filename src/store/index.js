@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import HeroService from '@/services/hero.service'
+import TeamService from '@/services/team.service'
 
 Vue.use(Vuex)
 
@@ -37,5 +39,32 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    // -------------
+    // Hero actions
+    // -------------
+    async fetchHeroAliases({ commit }) {
+      const heroAliases = await HeroService.getAliases();
+      if (heroAliases.error === 0) {
+        commit('setHeroAliases', heroAliases.data);
+      }
+    },
+
+    async getHeroById({ commit }, id) {
+      const hero = await HeroService.getHeroById(id);
+      if (hero.error === 0) {
+        commit('setCurrentHero', hero.data);
+      }
+    },
+
+    // -------------
+    // Team actions
+    // -------------
+
+    async fetchTeams({ commit }) {
+      const teams = await TeamService.getTeams();
+      if (teams.error === 0) {
+        commit('setTeams', teams.data);
+      }
+    }
   },
 })

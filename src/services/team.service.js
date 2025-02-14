@@ -74,7 +74,7 @@ async function removeHeroesFromTeam(teamId, heroesId) {
     }, {}, 'removeHeroesFromTeam');
 }
 
-export {
+export default {
     getTeams,
     createTeam,
     addHeroesToTeam,

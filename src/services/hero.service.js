@@ -80,7 +80,7 @@ async function getHeroById(id) {
     return await getRequest(`/heroes/getbyid/${id}`, {}, 'getHeroById');
 }
 
-export {
+export default {
     getAliases,
     createHero,
     updateHero,

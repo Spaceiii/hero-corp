@@ -3,6 +3,12 @@
     <nav-bar @toggleDrawer="toggleDrawer" />
     <v-navigation-drawer app :value="isDrawerOpen">
       <v-list>
+        <v-list-item to="/home">
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
         <v-list-item to="/organisations">
           <v-list-item-icon>
             <v-icon>mdi-domain</v-icon>
