@@ -18,6 +18,7 @@
  */
 
 import axios from "axios";
+import store from "@/store";
 
 const axiosAgent = axios.create({
     baseURL: 'https://apidemo.iut-bm.univ-fcomte.fr/herocorp/',
@@ -28,6 +29,19 @@ const axiosAgent = axios.create({
     // methode de traitement des erreurs, l'API renvoie {error: num_error, status: http_status, data: données}.
     // On renvoie une erreur avec le message de l'API
 });
+
+axiosAgent.interceptors.request.use(
+  config => {
+      const orgSecret = store.state.orgSecret;
+      if (orgSecret) {
+          config.headers['org-secret'] = orgSecret;
+      }
+      return config;
+  },
+  error => {
+      return Promise.reject(error);
+  }
+);
 
 /**
  * post parameters for a post request

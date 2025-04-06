@@ -43,7 +43,7 @@ async function addTeam(id, secret) {
     if (!secret)
         return { error: 1, status: 400, data: 'missing secret' };
 
-    return await patchRequest(`/orgs/addteam?org-secret=${secret}`, { idTeam: id }, {}, 'addTeam');
+    return await patchRequest(`/orgs/addteam`, { idTeam: id }, {}, 'addTeam');
 }
 
 /**
@@ -58,7 +58,7 @@ async function removeTeam(id, secret) {
     if (!secret)
         return { error: 1, status: 400, data: 'missing secret' };
 
-    return await patchRequest(`/orgs/removeteam?org-secret=${secret}`, { idTeam: id }, {}, 'removeTeam');
+    return await patchRequest(`/orgs/removeteam`, { idTeam: id }, {}, 'removeTeam');
 }
 
 /**
@@ -73,7 +73,7 @@ async function getOrgById(id, secret) {
     if (!secret)
         return { error: 1, status: 400, data: 'missing secret' };
 
-    return await getRequest(`/orgs/getbyid/${id}?org-secret=${secret}`, {}, 'getOrgById');
+    return await getRequest(`/orgs/getbyid/${id}`, {}, 'getOrgById');
 }
 
 export default {
