@@ -1,40 +1,45 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import OrganizationList from "@/views/OrganizationList.vue";
+import OrganizationDetail from "@/views/OrganizationDetail.vue";
+import AuthView from "@/views/AuthView.vue";
+import TeamList from "@/views/TeamList.vue";
+import TeamDetail from "@/views/TeamDetail.vue";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    alias: '/home',
-    name: 'home',
+    name: 'Home',
     component: HomeView
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/LoginView.vue')
+    path: '/auth',
+    name: 'Auth',
+    component: AuthView
   },
   {
-    path: '/organisations',
-    name: 'orgas',
-    component: () => import('@/views/OrganisationsView.vue')
+    path: '/organizations',
+    name: 'OrganizationList',
+    component: OrganizationList
   },
   {
-    path: '/organisations/:id',
-    name: 'orga',
-    component: () => import('@/views/OrganisationView.vue')
+    path: '/organizations/:id',
+    name: 'OrganizationDetail',
+    component: OrganizationDetail,
+    props: true
   },
   {
     path: '/teams',
-    name: 'teams',
-    component: () => import('@/views/TeamsView.vue')
+    name: 'TeamList',
+    component: TeamList
   },
   {
     path: '/teams/:id',
-    name: 'team',
-    component: () => import('@/views/TeamView.vue')
+    name: 'TeamDetail',
+    component: TeamDetail
   }
 ]
 

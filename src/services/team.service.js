@@ -1,5 +1,3 @@
-import { getRequest, postRequest } from "@/services/axios.service";
-
 /**
  * @typedef {Object} FormattedResponse
  * @template T
@@ -8,16 +6,7 @@ import { getRequest, postRequest } from "@/services/axios.service";
  * @property {T} data
  */
 
-/**
- * @typedef {Object} AxiosResponse
- * @template T
- * @property {T} data
- * @property {number} status
- * @property {string} statusText
- * @property {Object} headers
- * @property {axios.AxiosRequestConfig} config
- * @property {Object} request
- */
+import { getRequest, postRequest, patchRequest } from "@/services/axios.service";
 
 // GET : /teams/get
 /**
@@ -36,8 +25,9 @@ async function getTeams() {
  */
 async function createTeam(teamName) {
     if (!teamName)
-        return { error: 1, status: 400, data: 'missing team name' }
-    const response = await postRequest('/teams/create', teamName, {}, 'createTeam');
+        return { error: 1, status: 400, data: 'missing team name' };
+
+    const response = await postRequest('/teams/create', { name: teamName }, {}, 'createTeam');
     return { error: 0, status: response.status, data: response.data };
 }
 
@@ -49,7 +39,10 @@ async function createTeam(teamName) {
  * @returns {Promise<FormattedResponse>}
  */
 async function addHeroesToTeam(teamId, heroesId) {
-    return await postRequest('/teams/addheroes/', {
+    if (!teamId || !heroesId.length)
+        return { error: 1, status: 400, data: 'missing team id or heroes ids' };
+
+    return await patchRequest('/teams/addheroes', {
         idTeam: teamId,
         idHeroes: heroesId
     }, {}, 'addHeroesToTeam');
@@ -63,12 +56,10 @@ async function addHeroesToTeam(teamId, heroesId) {
  * @returns {Promise<FormattedResponse>}
  */
 async function removeHeroesFromTeam(teamId, heroesId) {
-    if(!heroesId.length)
-        return { error: 1, status: 400, data: 'missing heroes ids' }
-    if (!teamId)
-        return { error: 1, status: 400, data: 'missing team id' }
+    if (!teamId || !heroesId.length)
+        return { error: 1, status: 400, data: 'missing team id or heroes ids' };
 
-    return await postRequest(`/teams/removeheroes/`, {
+    return await patchRequest('/teams/removeheroes', {
         idTeam: teamId,
         idHeroes: heroesId
     }, {}, 'removeHeroesFromTeam');
@@ -79,4 +70,4 @@ export default {
     createTeam,
     addHeroesToTeam,
     removeHeroesFromTeam,
-}
+};

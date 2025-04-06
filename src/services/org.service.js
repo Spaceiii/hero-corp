@@ -6,21 +6,14 @@
  * @property {T} data
  */
 
-/**
- * @typedef {Object} Power
- * @property {string} name
- * @property {string} type
- * @property {int} level
- */
-
-import {getRequest, patchRequest, postRequest} from '@/services/axios.service';
+import { getRequest, patchRequest, postRequest } from '@/services/axios.service';
 
 /**
  * Obtenir les IDs des organisations et leurs noms
  * @returns {Promise<FormattedResponse<{_id: string, name: string}[]>>}
  */
 async function getOrgs() {
-    return await getRequest('/orgs/get', {}, 'getOrgs')
+    return await getRequest('/orgs/get', {}, 'getOrgs');
 }
 
 /**
@@ -31,14 +24,11 @@ async function getOrgs() {
  */
 async function createOrg(name, secret) {
     if (!name)
-        return { error: 1, status: 400, data: 'missing name' }
+        return { error: 1, status: 400, data: 'missing name' };
     if (!secret)
-        return { error: 1, status: 400, data: 'missing secret' }
-    return await postRequest(
-        '/orgs/create',
-        { name, secret },
-        {},
-        'createOrg');
+        return { error: 1, status: 400, data: 'missing secret' };
+
+    return await postRequest('/orgs/create', { name, secret }, {}, 'createOrg');
 }
 
 /**
@@ -49,14 +39,11 @@ async function createOrg(name, secret) {
  */
 async function addTeam(id, secret) {
     if (!id)
-        return {error: 1, status: 400, data: 'missing id'}
+        return { error: 1, status: 400, data: 'missing id' };
     if (!secret)
-        return {error: 1, status: 400, data: 'missing secret'}
-    return await patchRequest(
-        `/orgs/addteam?org-secret=${secret}`,
-        {idTeam: id},
-        {},
-        'addTeam');
+        return { error: 1, status: 400, data: 'missing secret' };
+
+    return await patchRequest(`/orgs/addteam?org-secret=${secret}`, { idTeam: id }, {}, 'addTeam');
 }
 
 /**
@@ -67,14 +54,11 @@ async function addTeam(id, secret) {
  */
 async function removeTeam(id, secret) {
     if (!id)
-        return { error: 1, status: 400, data: 'missing id' }
+        return { error: 1, status: 400, data: 'missing id' };
     if (!secret)
-        return { error: 1, status: 400, data: 'missing secret' }
-    return await patchRequest(
-        `/orgs/removeteam?org-secret=${secret}`,
-        { idTeam: id },
-        {},
-        'deleteOrg');
+        return { error: 1, status: 400, data: 'missing secret' };
+
+    return await patchRequest(`/orgs/removeteam?org-secret=${secret}`, { idTeam: id }, {}, 'removeTeam');
 }
 
 /**
@@ -83,19 +67,19 @@ async function removeTeam(id, secret) {
  * @param {string} secret
  * @returns {Promise<FormattedResponse>}
  */
-async function getTeamById(id, secret) {
+async function getOrgById(id, secret) {
     if (!id)
-        return { error: 1, status: 400, data: 'missing id' }
-    return await getRequest(
-        `/orgs/getbyid/${id}?org-secret=${secret}`,
-        {},
-        'selectOrg');
+        return { error: 1, status: 400, data: 'missing id' };
+    if (!secret)
+        return { error: 1, status: 400, data: 'missing secret' };
+
+    return await getRequest(`/orgs/getbyid/${id}?org-secret=${secret}`, {}, 'getOrgById');
 }
 
-export {
+export default {
     getOrgs,
     createOrg,
     addTeam,
     removeTeam,
-    getTeamById
-}
+    getOrgById
+};

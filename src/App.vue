@@ -1,54 +1,33 @@
 <template>
   <v-app>
-    <nav-bar @toggleDrawer="toggleDrawer" />
-    <v-navigation-drawer app :value="isDrawerOpen">
+    <v-app-bar app color="primary" dark>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>Mon Application</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn to="/auth">S'authentifier</v-btn>
+    </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" app>
       <v-list>
-        <v-list-item to="/home">
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Home</v-list-item-title>
-        </v-list-item>
-        <v-list-item to="/organisations">
-          <v-list-item-icon>
-            <v-icon>mdi-domain</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Organisations</v-list-item-title>
-        </v-list-item>
-        <v-list-item to="/teams">
-          <v-list-item-icon>
-            <v-icon>mdi-account-group</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Teams</v-list-item-title>
-        </v-list-item>
+        <v-list-item to="/">Accueil</v-list-item>
+        <v-list-item to="/organizations">Organisations</v-list-item>
+        <v-list-item to="/teams">Équipes</v-list-item>
       </v-list>
     </v-navigation-drawer>
+
     <v-main>
-      <router-view/>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-
-import NavBar from "@/components/Navbar.vue";
-
 export default {
   name: 'App',
-  components: {NavBar},
-
   data: () => ({
-    isDrawerOpen: false,
+    drawer: false,
   }),
-  methods: {
-    toggleDrawer() {
-      this.isDrawerOpen = !this.isDrawerOpen;
-      console.log(this.isDrawerOpen);
-    }
-  }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style></style>
